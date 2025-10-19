@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umariyya Alumni Meet - Photo Frame</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f0f0;
+      touch-action: none;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
+      padding: 40px 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 3.2em;
+      font-weight: 800;
+      color: #ffd700;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      letter-spacing: 2px;
+    }
+
+    .header h2 {
+      font-size: 2.2em;
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
+    }
+
+    .date-badge {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: white;
+      color: #0d7fa8;
+      padding: 15px 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .date-badge .day {
+      font-size: 2.5em;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .date-badge .suffix {
+      font-size: 1.2em;
+      font-weight: 600;
+      vertical-align: super;
+    }
+
+    .date-badge .month-year {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    /* Canvas Area */
+    .canvas-area {
+      flex: 1;
+      background: #e8e8e8;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
+    }
+
+    #twibbonCanvas {
+      border: 4px solid #0d7fa8;
+      background: #ffffff;
+      cursor: grab;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-radius: 8px;
+    }
+
+    /* Controls */
+    .controls {
+      background: white;
+      padding: 30px 20px;
+    }
+
+    .upload-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
+      color: white;
+      padding: 18px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2em;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 15px rgba(13, 127, 168, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .upload-btn:hover {
+      background: linear-gradient(135deg, #0a6a8f 0%, #154a60 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(13, 127, 168, 0.4);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 3px solid #0d7fa8;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8em;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
+      color: white;
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 127, 168, 0.3);
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .action-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Download Button */
+    .download-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
+      color: white;
+      padding: 18px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.3em;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 6px 15px rgba(13, 127, 168, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0a6a8f 0%, #154a60 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(13, 127, 168, 0.4);
+    }
+
+    .download-btn:disabled {
+      background: linear-gradient(135deg, #ccc 0%, #999 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer-avatar {
+      width: 70px;
+      height: 70px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.2);
+    }
+
+    .footer-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .footer-text {
+      font-size: 1.1em;
+      font-weight: 500;
+      text-align: left;
+      line-height: 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Responsive Design - Desktop First */
+    @media (max-width: 1024px) {
+      .header {
+        padding: 35px 20px;
+      }
+
+      .header h1 {
+        font-size: 2.8em;
+      }
+
+      .header h2 {
+        font-size: 1.9em;
+      }
+
+      .canvas-area {
+        padding: 35px 20px;
+      }
+
+      #twibbonCanvas {
+        max-width: 90%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 30px 15px;
+      }
+
+      .header h1 {
+        font-size: 2.2em;
+        letter-spacing: 1px;
+      }
+
+      .header h2 {
+        font-size: 1.5em;
+      }
+
+      .date-badge {
+        top: 20px;
+        right: 15px;
+        padding: 12px 18px;
+      }
+
+      .date-badge .day {
+        font-size: 2em;
+      }
+
+      .date-badge .suffix {
+        font-size: 1em;
+      }
+
+      .date-badge .month-year {
+        font-size: 1em;
+      }
+
+      .canvas-area {
+        padding: 25px 15px;
+        min-height: 40vh;
+      }
+
+      #twibbonCanvas {
+        max-width: 95%;
+        border-width: 3px;
+      }
+
+      .controls {
+        padding: 25px 15px;
+      }
+
+      .action-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+      }
+
+      .action-buttons {
+        gap: 15px;
+      }
+
+      .footer {
+        padding: 20px 15px;
+        gap: 15px;
+      }
+
+      .footer-avatar {
+        width: 60px;
+        height: 60px;
+      }
+
+      .footer-text {
+        font-size: 1em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 25px 10px;
+      }
+
+      .header h1 {
+        font-size: 1.8em;
+        margin-bottom: 5px;
+      }
+
+      .header h2 {
+        font-size: 1.2em;
+      }
+
+      .date-badge {
+        top: 15px;
+        right: 10px;
+        padding: 8px 12px;
+      }
+
+      .date-badge .day {
+        font-size: 1.6em;
+      }
+
+      .date-badge .suffix {
+        font-size: 0.9em;
+      }
+
+      .date-badge .month-year {
+        font-size: 0.85em;
+      }
+
+      .canvas-area {
+        padding: 20px 10px;
+        min-height: 35vh;
+      }
+
+      .controls {
+        padding: 20px 10px;
+      }
+
+      .upload-btn {
+        padding: 15px 16px;
+        font-size: 1.1em;
+      }
+
+      .action-buttons {
+        gap: 12px;
+      }
+
+      .action-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3em;
+        border-width: 2px;
+      }
+
+      .download-btn {
+        padding: 15px 16px;
+        font-size: 1.1em;
+      }
+
+      .footer {
+        padding: 18px 10px;
+        gap: 12px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-avatar {
+        width: 50px;
+        height: 50px;
+      }
+
+      .footer-text {
+        font-size: 0.9em;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .header h1 {
+        font-size: 1.5em;
+      }
+
+      .header h2 {
+        font-size: 1em;
+      }
+
+      .action-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2em;
+      }
+
+      .action-buttons {
+        gap: 8px;
+      }
+    }
+
+    /* Icons using Unicode */
+    .icon-camera::before { content: "📷"; }
+    .icon-rotate-left::before { content: "↺"; }
+    .icon-rotate-right::before { content: "↻"; }
+    .icon-zoom-out::before { content: "−"; font-size: 1.2em; }
+    .icon-zoom-in::before { content: "+"; font-size: 1.2em; }
+    .icon-download::before { content: "⬇"; }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* Smooth Transitions */
+    * {
+      transition: all 0.3s ease;
+    }
+
+    canvas {
+      transition: none;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>UMARIYYA</h1>
+      <h2>ALUMNI MEET</h2>
+      <div class="date-badge">
+        <div>
+          <span class="day">02</span><span class="suffix">nd</span>
+        </div>
+        <div class="month-year">Nov.<br>2025</div>
+      </div>
+    </div>
+
+    <!-- Canvas Area -->
+    <div class="canvas-area">
+      <canvas id="twibbonCanvas" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <!-- Upload Button -->
+      <label for="userPhoto" class="upload-btn">
+        <span class="icon-camera"></span>
+        <span>Choose Your Photo</span>
+      </label>
+      <input type="file" id="userPhoto" accept="image/*">
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="action-btn icon-rotate-left disabled" id="rotateLeftBtn" title="Rotate Left"></button>
+        <button class="action-btn icon-rotate-right disabled" id="rotateRightBtn" title="Rotate Right"></button>
+        <button class="action-btn icon-zoom-out disabled" id="zoomOutBtn" title="Zoom Out"></button>
+        <button class="action-btn icon-zoom-in disabled" id="zoomInBtn" title="Zoom In"></button>
+      </div>
+
+      <!-- Download Button -->
+      <button class="download-btn" id="downloadBtn" disabled>
+        <span class="icon-download"></span>
+        <span>Download (1080×1080)</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-avatar">
+        <img src="avatar.jpg" alt="Developer Avatar" onerror="this.style.display='none'; this.parentNode.innerHTML='👤';">
+      </div>
+      <div class="footer-text">
+        Developed by:<br/>
+         Miqdad Sa-adi
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('twibbonCanvas');
+    const ctx = canvas.getContext('2d');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+    const rotateRightBtn = document.getElementById('rotateRightBtn');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    
+    // Display and export sizes
+    const DISPLAY_SIZE = 400;
+    const EXPORT_SIZE = 1080;
+    const SCALE_RATIO = EXPORT_SIZE / DISPLAY_SIZE;
+    
+    let userImg = new Image(), frameImg = new Image();
+    let dragging = false, offsetX = 0, offsetY = 0, pos = {x: 50, y: 50};
+    let userImgLoaded = false, frameImgLoaded = false, scale = 1;
+    let originalWidth = 0, originalHeight = 0;
+    let aspectRatio = 1;
+    let lastDist = null;
+    let rotation = 0;
+
+    // Responsive canvas sizing
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      const containerWidth = container.clientWidth - 40;
+      const maxSize = Math.min(containerWidth, 400);
+      
+      if (maxSize < 400) {
+        canvas.style.width = maxSize + 'px';
+        canvas.style.height = maxSize + 'px';
+      } else {
+        canvas.style.width = '400px';
+        canvas.style.height = '400px';
+      }
+    }
+
+    // Initialize responsive canvas
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function getScaledDimensions() {
+      return {
+        width: originalWidth * scale,
+        height: originalHeight * scale
+      };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      if (userImgLoaded) {
+        const dims = getScaledDimensions();
+        ctx.save();
+        ctx.translate(pos.x + dims.width/2, pos.y + dims.height/2);
+        ctx.rotate(rotation * Math.PI / 180);
+        ctx.drawImage(userImg, -dims.width/2, -dims.height/2, dims.width, dims.height);
+        ctx.restore();
+      }
+      
+      if (frameImgLoaded) {
+        ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    // Load frame
+    frameImg.onload = function() {
+      console.log("Frame loaded successfully");
+      frameImgLoaded = true;
+      draw();
+    };
+    frameImg.onerror = function() {
+      console.log("Frame failed to load - continuing without frame");
+    };
+    frameImg.src = './frame.png';
+
+    // User photo upload
+    document.getElementById('userPhoto').onchange = function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          userImg = new Image();
+          userImg.onload = function() {
+            originalWidth = userImg.naturalWidth;
+            originalHeight = userImg.naturalHeight;
+            aspectRatio = originalWidth / originalHeight;
+            
+            const maxSize = 250;
+            if (originalWidth > originalHeight) {
+              originalWidth = Math.min(originalWidth, maxSize);
+              originalHeight = originalWidth / aspectRatio;
+            } else {
+              originalHeight = Math.min(originalHeight, maxSize);
+              originalWidth = originalHeight * aspectRatio;
+            }
+            
+            userImgLoaded = true;
+            pos = {x: 75, y: 75};
+            scale = 1;
+            rotation = 0;
+            draw();
+            
+            // Enable buttons
+            downloadBtn.disabled = false;
+            rotateLeftBtn.classList.remove('disabled');
+            rotateRightBtn.classList.remove('disabled');
+            zoomInBtn.classList.remove('disabled');
+            zoomOutBtn.classList.remove('disabled');
+            
+            downloadBtn.innerHTML = '<span class="icon-download"></span><span>Download (1080×1080)</span>';
+          };
+          userImg.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    // Button functionalities
+    rotateLeftBtn.onclick = function() {
+      if (!userImgLoaded) return;
+      rotation -= 90;
+      draw();
+    };
+
+    rotateRightBtn.onclick = function() {
+      if (!userImgLoaded) return;
+      rotation += 90;
+      draw();
+    };
+
+    zoomInBtn.onclick = function() {
+      if (!userImgLoaded) return;
+      scale = Math.min(5, scale * 1.2);
+      draw();
+    };
+
+    zoomOutBtn.onclick = function() {
+      if (!userImgLoaded) return;
+      scale = Math.max(0.2, scale * 0.8);
+      draw();
+    };
+
+    // Drag functionality
+    canvas.onmousedown = function(e) {
+      if (!userImgLoaded) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const dims = getScaledDimensions();
+      
+      if (x >= pos.x && x <= pos.x + dims.width && 
+          y >= pos.y && y <= pos.y + dims.height) {
+        dragging = true;
+        offsetX = x - pos.x;
+        offsetY = y - pos.y;
+        canvas.style.cursor = "grabbing";
+      }
+    };
+
+    canvas.onmousemove = function(e) {
+      if (dragging && userImgLoaded) {
+        const rect = canvas.getBoundingClientRect();
+        pos.x = e.clientX - rect.left - offsetX;
+        pos.y = e.clientY - rect.top - offsetY;
+        draw();
+      }
+    };
+
+    canvas.onmouseup = canvas.onmouseleave = function() {
+      dragging = false;
+      canvas.style.cursor = "grab";
+    };
+
+    // Touch events
+    canvas.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1 && userImgLoaded) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.touches[0].clientX - rect.left;
+        const y = e.touches[0].clientY - rect.top;
+        const dims = getScaledDimensions();
+        
+        if (x >= pos.x && x <= pos.x + dims.width && 
+            y >= pos.y && y <= pos.y + dims.height) {
+          dragging = true;
+          offsetX = x - pos.x;
+          offsetY = y - pos.y;
+        }
+      } else if (e.touches.length === 2) {
+        lastDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+      }
+    }, {passive: false});
+
+    canvas.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+      if (e.touches.length === 1 && dragging && userImgLoaded) {
+        const rect = canvas.getBoundingClientRect();
+        pos.x = e.touches[0].clientX - rect.left - offsetX;
+        pos.y = e.touches[0].clientY - rect.top - offsetY;
+        draw();
+      } else if (e.touches.length === 2 && lastDist !== null && userImgLoaded) {
+        let newDist = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        let diff = newDist / lastDist;
+        scale = Math.max(0.2, Math.min(5, scale * diff));
+        lastDist = newDist;
+        draw();
+      }
+    }, {passive: false});
+
+    canvas.addEventListener('touchend', function(e) {
+      dragging = false;
+      if (e.touches.length < 2) {
+        lastDist = null;
+      }
+    }, {passive: false});
+
+    // Mouse wheel zoom
+    canvas.addEventListener('wheel', function(e) {
+      if (userImgLoaded) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 1.1 : 0.9;
+        scale = Math.max(0.2, Math.min(5, scale * delta));
+        draw();
+      }
+    });
+
+    // High-resolution download
+    downloadBtn.onclick = function() {
+      if (!userImgLoaded) return;
+
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = EXPORT_SIZE;
+      exportCanvas.height = EXPORT_SIZE;
+      const exportCtx = exportCanvas.getContext('2d');
+
+      const dims = getScaledDimensions();
+      const scaledPosX = pos.x * SCALE_RATIO;
+      const scaledPosY = pos.y * SCALE_RATIO;
+      const scaledWidth = dims.width * SCALE_RATIO;
+      const scaledHeight = dims.height * SCALE_RATIO;
+
+      exportCtx.save();
+      exportCtx.translate(scaledPosX + scaledWidth/2, scaledPosY + scaledHeight/2);
+      exportCtx.rotate(rotation * Math.PI / 180);
+      exportCtx.drawImage(userImg, -scaledWidth/2, -scaledHeight/2, scaledWidth, scaledHeight);
+      exportCtx.restore();
+
+      if (frameImgLoaded) {
+        exportCtx.drawImage(frameImg, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
+      }
+
+      const link = document.createElement('a');
+      link.download = 'umariyya-alumni-meet-1080x1080.png';
+      link.href = exportCanvas.toDataURL('image/png');
+      link.click();
+    };
+  </script>
+</body>
+</html>
