@@ -3,9 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Umariyya Alumni Meet - Photo Frame</title>
+  
+  <!-- Title -->
+  <title>Umariyya Alumni Meet 2025 - Photo Frame</title>
+  
+  <!-- Favicon (Browser Tab Icon) -->
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  
+  <!-- Thumbnail for URL Sharing (WhatsApp, Facebook, Twitter, etc.) -->
+  <meta property="og:title" content="Umariyya Alumni Meet 2025 - Photo Frame">
+  <meta property="og:description" content="Create your personalized photo frame for Umariyya Alumni Meet on November 2nd, 2025">
+  <meta property="og:image" content="https://MIKTHADPK.git.io/profile-frames/thumbnail.jpg">
+  <meta property="og:url" content="https://MIKTHADPK.git.io/profile-frames/">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Umariyya Alumni Meet 2025">
+  <meta name="twitter:description" content="Create your personalized photo frame">
+  <meta name="twitter:image" content="https://MIKTHADPK.git.io/profile-frames/thumbnail.jpg">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0d7fa8">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
   <style>
+    /* Your CSS from previous code here */
     * {
       margin: 0;
       padding: 0;
@@ -15,7 +42,6 @@
     body {
       font-family: 'Poppins', sans-serif;
       background: #f0f0f0;
-      touch-action: none;
       overflow-x: hidden;
       line-height: 1.6;
     }
@@ -32,9 +58,9 @@
     /* Header */
     .header {
       background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
-      padding: 40px 20px;
+      padding: 5px 20px;
       color: white;
-      text-align: center;
+      text-align: left;
       position: relative;
     }
 
@@ -42,7 +68,7 @@
       font-size: 3.2em;
       font-weight: 800;
       color: #ffd700;
-      margin-bottom: 8px;
+      margin-bottom: -30px;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
       letter-spacing: 2px;
     }
@@ -52,7 +78,7 @@
       font-weight: 600;
       color: #ffffff;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-      letter-spacing: 1px;
+      letter-spacing: 6px;
     }
 
     .date-badge {
@@ -71,7 +97,7 @@
     .date-badge .day {
       font-size: 2.5em;
       font-weight: 700;
-      line-height: 1;
+      line-height: 0;
     }
 
     .date-badge .suffix {
@@ -83,7 +109,8 @@
     .date-badge .month-year {
       font-size: 1.1em;
       font-weight: 600;
-      margin-top: 5px;
+      margin-top: 3px;
+      line-height: 1;
     }
 
     /* Canvas Area */
@@ -105,6 +132,7 @@
       height: auto;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       border-radius: 8px;
+      touch-action: none;
     }
 
     /* Controls */
@@ -113,34 +141,62 @@
       padding: 30px 20px;
     }
 
-    .upload-btn {
-      width: 100%;
+    /* Upload and Download Button Row */
+    .main-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .upload-btn, .download-btn {
       background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
       color: white;
       padding: 18px 20px;
       border: none;
       border-radius: 12px;
-      font-size: 1.2em;
+      font-size: 2em;
       font-weight: 600;
       font-family: 'Poppins', sans-serif;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 25px;
       box-shadow: 0 6px 15px rgba(13, 127, 168, 0.3);
       transition: all 0.3s ease;
     }
 
-    .upload-btn:hover {
+    .upload-btn:hover, .download-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, #0a6a8f 0%, #154a60 100%);
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(13, 127, 168, 0.4);
     }
 
+    .upload-btn:active, .download-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .download-btn:disabled {
+      background: linear-gradient(135deg, #ccc 0%, #999 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      opacity: 0.6;
+    }
+
     input[type="file"] {
       display: none;
+    }
+
+    /* Material Icons Styling */
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48;
+      color: white;
+      font-size: 1em;
     }
 
     /* Action Buttons */
@@ -148,7 +204,7 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      margin-bottom: 25px;
+      margin-bottom: 0;
       flex-wrap: wrap;
     }
 
@@ -169,11 +225,24 @@
       position: relative;
     }
 
+    .action-btn .material-symbols-outlined {
+      color: #0d7fa8;
+      font-size: 1.5em;
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 500,
+      'GRAD' 0,
+      'opsz' 48;
+    }
+
     .action-btn:hover {
       background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
-      color: white;
       transform: scale(1.1) translateY(-2px);
       box-shadow: 0 6px 20px rgba(13, 127, 168, 0.3);
+    }
+
+    .action-btn:hover .material-symbols-outlined {
+      color: white;
     }
 
     .action-btn:active {
@@ -184,39 +253,6 @@
       opacity: 0.4;
       cursor: not-allowed;
       pointer-events: none;
-    }
-
-    /* Download Button */
-    .download-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #0d7fa8 0%, #1a5f7a 100%);
-      color: white;
-      padding: 18px 20px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.3em;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      box-shadow: 0 6px 15px rgba(13, 127, 168, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    .download-btn:hover:not(:disabled) {
-      background: linear-gradient(135deg, #0a6a8f 0%, #154a60 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(13, 127, 168, 0.4);
-    }
-
-    .download-btn:disabled {
-      background: linear-gradient(135deg, #ccc 0%, #999 100%);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     /* Footer */
@@ -254,33 +290,10 @@
       font-size: 1.1em;
       font-weight: 500;
       text-align: left;
-      line-height: 16px;
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Responsive Design - Desktop First */
-    @media (max-width: 1024px) {
-      .header {
-        padding: 35px 20px;
-      }
-
-      .header h1 {
-        font-size: 2.8em;
-      }
-
-      .header h2 {
-        font-size: 1.9em;
-      }
-
-      .canvas-area {
-        padding: 35px 20px;
-      }
-
-      #twibbonCanvas {
-        max-width: 90%;
-      }
-    }
-
+    /* Responsive Design */
     @media (max-width: 768px) {
       .header {
         padding: 30px 15px;
@@ -293,6 +306,8 @@
 
       .header h2 {
         font-size: 1.5em;
+        margin-top: 7px;
+        letter-spacing: 4.5px;
       }
 
       .date-badge {
@@ -305,125 +320,57 @@
         font-size: 2em;
       }
 
-      .date-badge .suffix {
-        font-size: 1em;
-      }
-
-      .date-badge .month-year {
-        font-size: 1em;
-      }
-
       .canvas-area {
         padding: 25px 15px;
-        min-height: 40vh;
-      }
-
-      #twibbonCanvas {
-        max-width: 95%;
-        border-width: 3px;
       }
 
       .controls {
         padding: 25px 15px;
       }
 
+      .main-buttons {
+        gap: 12px;
+      }
+
+      .upload-btn, .download-btn {
+        padding: 15px;
+        font-size: 1.8em;
+      }
+
       .action-btn {
         width: 60px;
         height: 60px;
-        font-size: 1.5em;
-      }
-
-      .action-buttons {
-        gap: 15px;
       }
 
       .footer {
         padding: 20px 15px;
         gap: 15px;
       }
-
-      .footer-avatar {
-        width: 60px;
-        height: 60px;
-      }
-
-      .footer-text {
-        font-size: 1em;
-      }
     }
 
     @media (max-width: 480px) {
-      .header {
-        padding: 25px 10px;
-      }
-
       .header h1 {
         font-size: 1.8em;
-        margin-bottom: 5px;
       }
 
       .header h2 {
         font-size: 1.2em;
+        margin-top: 12px;
+        letter-spacing: 4px;
       }
 
-      .date-badge {
-        top: 15px;
-        right: 10px;
-        padding: 8px 12px;
-      }
-
-      .date-badge .day {
+      .upload-btn, .download-btn {
+        padding: 12px;
         font-size: 1.6em;
-      }
-
-      .date-badge .suffix {
-        font-size: 0.9em;
-      }
-
-      .date-badge .month-year {
-        font-size: 0.85em;
-      }
-
-      .canvas-area {
-        padding: 20px 10px;
-        min-height: 35vh;
-      }
-
-      .controls {
-        padding: 20px 10px;
-      }
-
-      .upload-btn {
-        padding: 15px 16px;
-        font-size: 1.1em;
-      }
-
-      .action-buttons {
-        gap: 12px;
       }
 
       .action-btn {
         width: 55px;
         height: 55px;
-        font-size: 1.3em;
-        border-width: 2px;
-      }
-
-      .download-btn {
-        padding: 15px 16px;
-        font-size: 1.1em;
       }
 
       .footer {
-        padding: 18px 10px;
-        gap: 12px;
         flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-avatar {
-        width: 50px;
-        height: 50px;
       }
 
       .footer-text {
@@ -432,55 +379,8 @@
       }
     }
 
-    @media (max-width: 320px) {
-      .header h1 {
-        font-size: 1.5em;
-      }
-
-      .header h2 {
-        font-size: 1em;
-      }
-
-      .action-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2em;
-      }
-
-      .action-buttons {
-        gap: 8px;
-      }
-    }
-
-    /* Icons using Unicode */
-    .icon-camera::before { content: "📷"; }
-    .icon-rotate-left::before { content: "↺"; }
-    .icon-rotate-right::before { content: "↻"; }
-    .icon-zoom-out::before { content: "−"; font-size: 1.2em; }
-    .icon-zoom-in::before { content: "+"; font-size: 1.2em; }
-    .icon-download::before { content: "⬇"; }
-
-    /* Loading Animation */
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    /* Smooth Transitions */
-    * {
+    button, .upload-btn {
       transition: all 0.3s ease;
-    }
-
-    canvas {
-      transition: none;
-    }
-
-    /* Accessibility */
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-        animation: none !important;
-      }
     }
   </style>
 </head>
@@ -505,36 +405,41 @@
 
     <!-- Controls -->
     <div class="controls">
-      <!-- Upload Button -->
-      <label for="userPhoto" class="upload-btn">
-        <span class="icon-camera"></span>
-        <span>Choose Your Photo</span>
-      </label>
+      <!-- Upload and Download Button Row -->
+      <div class="main-buttons">
+        <label for="userPhoto" class="upload-btn">
+          <span class="material-symbols-outlined">photo_camera</span>
+        </label>
+        <button class="download-btn" id="downloadBtn" disabled>
+          <span class="material-symbols-outlined">download</span>
+        </button>
+      </div>
       <input type="file" id="userPhoto" accept="image/*">
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <button class="action-btn icon-rotate-left disabled" id="rotateLeftBtn" title="Rotate Left"></button>
-        <button class="action-btn icon-rotate-right disabled" id="rotateRightBtn" title="Rotate Right"></button>
-        <button class="action-btn icon-zoom-out disabled" id="zoomOutBtn" title="Zoom Out"></button>
-        <button class="action-btn icon-zoom-in disabled" id="zoomInBtn" title="Zoom In"></button>
+        <button class="action-btn disabled" id="rotateLeftBtn" title="Rotate Left">
+          <span class="material-symbols-outlined">rotate_left</span>
+        </button>
+        <button class="action-btn disabled" id="rotateRightBtn" title="Rotate Right">
+          <span class="material-symbols-outlined">rotate_right</span>
+        </button>
+        <button class="action-btn disabled" id="zoomOutBtn" title="Zoom Out">
+          <span class="material-symbols-outlined">zoom_out</span>
+        </button>
+        <button class="action-btn disabled" id="zoomInBtn" title="Zoom In">
+          <span class="material-symbols-outlined">zoom_in</span>
+        </button>
       </div>
-
-      <!-- Download Button -->
-      <button class="download-btn" id="downloadBtn" disabled>
-        <span class="icon-download"></span>
-        <span>Download (1080×1080)</span>
-      </button>
     </div>
 
     <!-- Footer -->
     <div class="footer">
       <div class="footer-avatar">
-        <img src="avatar.jpg" alt="Developer Avatar" onerror="this.style.display='none'; this.parentNode.innerHTML='👤';">
+        <img src="avatar.jpg" alt="Developer Avatar" onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'material-symbols-outlined\' style=\'font-size:2em;color:#0d7fa8;\'>person</span>';">
       </div>
       <div class="footer-text">
-        Developed by:<br/>
-         Miqdad Sa-adi
+        Developed by: Miqdad Sa-adi Al-Afzali
       </div>
     </div>
   </div>
@@ -648,8 +553,6 @@
             rotateRightBtn.classList.remove('disabled');
             zoomInBtn.classList.remove('disabled');
             zoomOutBtn.classList.remove('disabled');
-            
-            downloadBtn.innerHTML = '<span class="icon-download"></span><span>Download (1080×1080)</span>';
           };
           userImg.src = event.target.result;
         };
@@ -682,12 +585,14 @@
       draw();
     };
 
-    // Drag functionality
+    // Drag functionality - Mouse
     canvas.onmousedown = function(e) {
       if (!userImgLoaded) return;
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
       const dims = getScaledDimensions();
       
       if (x >= pos.x && x <= pos.x + dims.width && 
@@ -702,8 +607,10 @@
     canvas.onmousemove = function(e) {
       if (dragging && userImgLoaded) {
         const rect = canvas.getBoundingClientRect();
-        pos.x = e.clientX - rect.left - offsetX;
-        pos.y = e.clientY - rect.top - offsetY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        pos.x = (e.clientX - rect.left) * scaleX - offsetX;
+        pos.y = (e.clientY - rect.top) * scaleY - offsetY;
         draw();
       }
     };
@@ -715,10 +622,14 @@
 
     // Touch events
     canvas.addEventListener('touchstart', function(e) {
-      if (e.touches.length === 1 && userImgLoaded) {
+      if (!userImgLoaded) return;
+      
+      if (e.touches.length === 1) {
         const rect = canvas.getBoundingClientRect();
-        const x = e.touches[0].clientX - rect.left;
-        const y = e.touches[0].clientY - rect.top;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const x = (e.touches[0].clientX - rect.left) * scaleX;
+        const y = (e.touches[0].clientY - rect.top) * scaleY;
         const dims = getScaledDimensions();
         
         if (x >= pos.x && x <= pos.x + dims.width && 
@@ -726,8 +637,10 @@
           dragging = true;
           offsetX = x - pos.x;
           offsetY = y - pos.y;
+          e.preventDefault();
         }
       } else if (e.touches.length === 2) {
+        e.preventDefault();
         lastDist = Math.hypot(
           e.touches[0].pageX - e.touches[1].pageX,
           e.touches[0].pageY - e.touches[1].pageY
@@ -736,13 +649,18 @@
     }, {passive: false});
 
     canvas.addEventListener('touchmove', function(e) {
-      e.preventDefault();
-      if (e.touches.length === 1 && dragging && userImgLoaded) {
+      if (!userImgLoaded) return;
+      
+      if (e.touches.length === 1 && dragging) {
+        e.preventDefault();
         const rect = canvas.getBoundingClientRect();
-        pos.x = e.touches[0].clientX - rect.left - offsetX;
-        pos.y = e.touches[0].clientY - rect.top - offsetY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        pos.x = (e.touches[0].clientX - rect.left) * scaleX - offsetX;
+        pos.y = (e.touches[0].clientY - rect.top) * scaleY - offsetY;
         draw();
-      } else if (e.touches.length === 2 && lastDist !== null && userImgLoaded) {
+      } else if (e.touches.length === 2 && lastDist !== null) {
+        e.preventDefault();
         let newDist = Math.hypot(
           e.touches[0].pageX - e.touches[1].pageX,
           e.touches[0].pageY - e.touches[1].pageY
@@ -769,7 +687,7 @@
         scale = Math.max(0.2, Math.min(5, scale * delta));
         draw();
       }
-    });
+    }, {passive: false});
 
     // High-resolution download
     downloadBtn.onclick = function() {
